@@ -275,3 +275,6 @@ body {
 
 .reveal blockquote {
   color: #888; }
+
+.reveal .progress span {
+  background: #009; }

@@ -62,3 +62,9 @@ $font-family-monospace:   "SF Mono", Menlo, Monaco, Consolas, "Courier New", mon
   color: #888;
 }
 
+// Enforce link color on pre-3.6 (GitPitch) progress bars
+	.reveal .progress span {
+		background: $linkColor;
+	}
+
+
