@@ -307,7 +307,7 @@ body {
 .reveal .progress span {
   background: #009; }
 
-.gp-menu .slide-menu-button {
+.gp-menu-bars {
   color: #AAA; }
-  .gp-menu .slide-menu-button :hover {
+  .gp-menu-bars :hover {
     color: blue; }
