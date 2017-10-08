@@ -112,3 +112,12 @@ $font-family-monospace:   "SF Mono", Menlo, Monaco, Consolas, "Courier New", mon
 .icon-muted, .muted {
 	color: #eee;
 }
+
+// Background logo
+
+#gp-logo {
+	&::after {
+		color: lime;
+		content: ' ❮•❯';
+	}
+}

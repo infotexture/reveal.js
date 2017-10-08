@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**
  * The 'infotexture' theme for reveal.js presentations
  * is based on the simple theme provided by reveal.js.
@@ -309,8 +310,12 @@ body {
 
 .gp-menu-bars {
   color: #AAA; }
-  .gp-menu-bars :hover {
+  .gp-menu-bars:hover {
     color: blue; }
 
 .icon-muted, .muted {
   color: #eee; }
+
+#gp-logo::after {
+  color: lime;
+  content: ' ❮•❯'; }
