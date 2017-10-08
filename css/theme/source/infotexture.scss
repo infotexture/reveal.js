@@ -97,4 +97,12 @@ $font-family-monospace:   "SF Mono", Menlo, Monaco, Consolas, "Courier New", mon
 		background: $linkColor;
 	}
 
+// GitPitch menu
 
+.gp-menu .slide-menu-button {
+  color: #AAA;
+  
+  :hover {
+  	color: $linkColorHover ;
+  }
+}
