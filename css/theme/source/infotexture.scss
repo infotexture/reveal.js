@@ -81,16 +81,16 @@ $font-family-monospace:   "SF Mono", Menlo, Monaco, Consolas, "Courier New", mon
   border-top-color: $linkColor; }
 
 .reveal .controls .navigate-left.enabled:hover {
-  border-right-color: tran­spa­ren­tiz­e($linkColor, 10%); }
+  border-right-color: $linkColorHover; }
 
 .reveal .controls .navigate-right.enabled:hover {
-  border-left-color: tran­spa­ren­tiz­e($linkColor, 20%); }
+  border-left-color: $linkColorHover; }
 
 .reveal .controls .navigate-up.enabled:hover {
-  border-bottom-color: tran­spa­ren­tiz­e($linkColor, 50%); }
+  border-bottom-color: $linkColorHover; }
 
 .reveal .controls .navigate-down.enabled:hover {
-  border-top-color: tran­spa­ren­tiz­e($linkColor, 50%); }
+  border-top-color: $linkColorHover; }
 
 // Enforce link color on pre-3.6 (GitPitch) progress bars
 	.reveal .progress span {

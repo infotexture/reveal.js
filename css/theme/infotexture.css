@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /**
  * The 'infotexture' theme for reveal.js presentations
  * is based on the simple theme provided by reveal.js.
@@ -294,16 +293,16 @@ body {
   border-top-color: #009; }
 
 .reveal .controls .navigate-left.enabled:hover {
-  border-right-color: tran­spa­ren­tiz­e(#009, 10%); }
+  border-right-color: blue; }
 
 .reveal .controls .navigate-right.enabled:hover {
-  border-left-color: tran­spa­ren­tiz­e(#009, 20%); }
+  border-left-color: blue; }
 
 .reveal .controls .navigate-up.enabled:hover {
-  border-bottom-color: tran­spa­ren­tiz­e(#009, 50%); }
+  border-bottom-color: blue; }
 
 .reveal .controls .navigate-down.enabled:hover {
-  border-top-color: tran­spa­ren­tiz­e(#009, 50%); }
+  border-top-color: blue; }
 
 .reveal .progress span {
   background: #009; }
