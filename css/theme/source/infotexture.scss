@@ -62,6 +62,36 @@ $font-family-monospace:   "SF Mono", Menlo, Monaco, Consolas, "Courier New", mon
   color: #888;
 }
 
+// Enforce link color on controls
+
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-left.enabled {
+  border-right-color: $linkColor; }
+
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-right.enabled {
+  border-left-color: $linkColor; }
+
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-up.enabled {
+  border-bottom-color: $linkColor; }
+
+.reveal .controls .navigate-down,
+.reveal .controls .navigate-down.enabled {
+  border-top-color: $linkColor; }
+
+.reveal .controls .navigate-left.enabled:hover {
+  border-right-color: tran­spa­ren­tiz­e($linkColor, 10%); }
+
+.reveal .controls .navigate-right.enabled:hover {
+  border-left-color: tran­spa­ren­tiz­e($linkColor, 20%); }
+
+.reveal .controls .navigate-up.enabled:hover {
+  border-bottom-color: tran­spa­ren­tiz­e($linkColor, 50%); }
+
+.reveal .controls .navigate-down.enabled:hover {
+  border-top-color: tran­spa­ren­tiz­e($linkColor, 50%); }
+
 // Enforce link color on pre-3.6 (GitPitch) progress bars
 	.reveal .progress span {
 		background: $linkColor;
