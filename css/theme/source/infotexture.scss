@@ -102,7 +102,7 @@ $font-family-monospace:   "SF Mono", Menlo, Monaco, Consolas, "Courier New", mon
 .gp-menu-bars {
   color: #AAA;
   
-  :hover {
+  &:hover {
   	color: $linkColorHover ;
   }
 }
