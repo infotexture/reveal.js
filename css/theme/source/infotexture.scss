@@ -60,6 +60,9 @@ $font-family-monospace:   "SF Mono", Menlo, Monaco, Consolas, "Courier New", mon
 
 .reveal blockquote {
   color: #888;
+  text-align: left;
+  border-left: 3px solid #888;
+  width: 88%;
 }
 
 // Enforce link color on controls

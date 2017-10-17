@@ -274,7 +274,10 @@ body {
   color: #888; }
 
 .reveal blockquote {
-  color: #888; }
+  color: #888;
+  text-align: left;
+  border-left: 3px solid #888;
+  width: 88%; }
 
 .reveal .controls .navigate-left,
 .reveal .controls .navigate-left.enabled {
