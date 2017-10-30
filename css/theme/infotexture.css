@@ -275,8 +275,8 @@ body {
 
 .reveal blockquote {
   color: #888;
+  padding: 2em;
   text-align: left;
-  border-left: 3px solid #888;
   width: 88%; }
 
 .reveal .controls .navigate-left,
