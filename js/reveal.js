@@ -1,6 +1,6 @@
 /*!
  * reveal.js
- * http://lab.hakim.se/reveal-js
+ * http://revealjs.com
  * MIT licensed
  *
  * Copyright (C) 2017 Hakim El Hattab, http://hakim.se
@@ -26,7 +26,7 @@
 	var Reveal;
 
 	// The reveal.js version
-	var VERSION = '3.5.0';
+	var VERSION = '3.6.0';
 
 	var SLIDES_SELECTOR = '.slides section',
 		HORIZONTAL_SLIDES_SELECTOR = '.slides>section',
@@ -461,6 +461,8 @@
 	 */
 	function start() {
 
+		loaded = true;
+
 		// Make sure we've got all the DOM elements we need
 		setupDOM();
 
@@ -487,8 +489,6 @@
 		setTimeout( function() {
 			// Enable transitions now that we're loaded
 			dom.slides.classList.remove( 'no-transition' );
-
-			loaded = true;
 
 			dom.wrapper.classList.add( 'ready' );
 
@@ -1014,13 +1014,21 @@
 	 */
 	function configure( options ) {
 
-		var numberOfSlides = dom.wrapper.querySelectorAll( SLIDES_SELECTOR ).length;
-
-		dom.wrapper.classList.remove( config.transition );
+		var oldTransition = config.transition;
 
 		// New config options may be passed when this method
 		// is invoked through the API after initialization
 		if( typeof options === 'object' ) extend( config, options );
+
+		// Abort if reveal.js hasn't finished loading, config
+		// changes will be applied automatically once loading
+		// finishes
+		if( loaded === false ) return;
+
+		var numberOfSlides = dom.wrapper.querySelectorAll( SLIDES_SELECTOR ).length;
+
+		// Remove the previously configured transition class
+		dom.wrapper.classList.remove( oldTransition );
 
 		// Force linear transition based on browser capabilities
 		if( features.transforms3d === false ) config.transition = 'linear';
@@ -1265,6 +1273,8 @@
 		for( var i in b ) {
 			a[ i ] = b[ i ];
 		}
+
+		return a;
 
 	}
 
@@ -2501,7 +2511,7 @@
 
 		// Start or stop embedded content depending on global config
 		if( config.autoPlayMedia === false ) {
-			stopEmbeddedContent( currentSlide );
+			stopEmbeddedContent( currentSlide, { unloadIframes: false } );
 		}
 		else {
 			startEmbeddedContent( currentSlide );
@@ -2738,10 +2748,10 @@
 
 				// Show the horizontal slide if it's within the view distance
 				if( distanceX < viewDistance ) {
-					showSlide( horizontalSlide );
+					loadSlide( horizontalSlide );
 				}
 				else {
-					hideSlide( horizontalSlide );
+					unloadSlide( horizontalSlide );
 				}
 
 				if( verticalSlidesLength ) {
@@ -2754,10 +2764,10 @@
 						distanceY = x === ( indexh || 0 ) ? Math.abs( ( indexv || 0 ) - y ) : Math.abs( y - oy );
 
 						if( distanceX + distanceY < viewDistance ) {
-							showSlide( verticalSlide );
+							loadSlide( verticalSlide );
 						}
 						else {
-							hideSlide( verticalSlide );
+							unloadSlide( verticalSlide );
 						}
 					}
 
@@ -3156,14 +3166,9 @@
 	 *
 	 * @param {HTMLElement} slide Slide to show
 	 */
-	/**
-	 * Called when the given slide is within the configured view
-	 * distance. Shows the slide element and loads any content
-	 * that is set to load lazily (data-src).
-	 *
-	 * @param {HTMLElement} slide Slide to show
-	 */
-	function showSlide( slide ) {
+	function loadSlide( slide, options ) {
+
+		options = options || {};
 
 		// Show the slide element
 		slide.style.display = config.display;
@@ -3243,7 +3248,7 @@
 					background.appendChild( video );
 				}
 				// Iframes
-				else if( backgroundIframe ) {
+				else if( backgroundIframe && options.excludeIframes !== true ) {
 					var iframe = document.createElement( 'iframe' );
 					iframe.setAttribute( 'allowfullscreen', '' );
 					iframe.setAttribute( 'mozallowfullscreen', '' );
@@ -3272,12 +3277,12 @@
 	}
 
 	/**
-	 * Called when the given slide is moved outside of the
-	 * configured view distance.
+	 * Unloads and hides the given slide. This is called when the
+	 * slide is moved outside of the configured view distance.
 	 *
 	 * @param {HTMLElement} slide
 	 */
-	function hideSlide( slide ) {
+	function unloadSlide( slide ) {
 
 		// Hide the slide element
 		slide.style.display = 'none';
@@ -3527,7 +3532,12 @@
 	 *
 	 * @param {HTMLElement} element
 	 */
-	function stopEmbeddedContent( element ) {
+	function stopEmbeddedContent( element, options ) {
+
+		options = extend( {
+			// Defaults
+			unloadIframes: true
+		}, options || {} );
 
 		if( element && element.parentNode ) {
 			// HTML5 media elements
@@ -3558,13 +3568,15 @@
 				}
 			});
 
-			// Lazy loading iframes
-			toArray( element.querySelectorAll( 'iframe[data-src]' ) ).forEach( function( el ) {
-				// Only removing the src doesn't actually unload the frame
-				// in all browsers (Firefox) so we set it to blank first
-				el.setAttribute( 'src', 'about:blank' );
-				el.removeAttribute( 'src' );
-			} );
+			if( options.unloadIframes === true ) {
+				// Unload lazy-loaded iframes
+				toArray( element.querySelectorAll( 'iframe[data-src]' ) ).forEach( function( el ) {
+					// Only removing the src doesn't actually unload the frame
+					// in all browsers (Firefox) so we set it to blank first
+					el.setAttribute( 'src', 'about:blank' );
+					el.removeAttribute( 'src' );
+				} );
+			}
 		}
 
 	}
@@ -3852,25 +3864,12 @@
 	 */
 	function getSlideBackground( x, y ) {
 
-		// When printing to PDF the slide backgrounds are nested
-		// inside of the slides
-		if( isPrintingPDF() ) {
-			var slide = getSlide( x, y );
-			if( slide ) {
-				return slide.slideBackgroundElement;
-			}
-
-			return undefined;
+		var slide = getSlide( x, y );
+		if( slide ) {
+			return slide.slideBackgroundElement;
 		}
 
-		var horizontalBackground = dom.wrapper.querySelectorAll( '.backgrounds>.slide-background' )[ x ];
-		var verticalBackgrounds = horizontalBackground && horizontalBackground.querySelectorAll( '.slide-background' );
-
-		if( verticalBackgrounds && verticalBackgrounds.length && typeof y === 'number' ) {
-			return verticalBackgrounds ? verticalBackgrounds[ y ] : undefined;
-		}
-
-		return horizontalBackground;
+		return undefined;
 
 	}
 
@@ -5111,6 +5110,11 @@
 		isOverview: isOverview,
 		isPaused: isPaused,
 		isAutoSliding: isAutoSliding,
+		isSpeakerNotes: isSpeakerNotes,
+
+		// Slide preloading
+		loadSlide: loadSlide,
+		unloadSlide: unloadSlide,
 
 		// Adds or removes all internal event listeners (such as keyboard)
 		addEventListeners: addEventListeners,
