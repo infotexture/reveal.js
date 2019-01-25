@@ -1,0 +1,139 @@
+/**
+ * The 'Inter UI' theme for reveal.js presentations
+ * is based on the simple theme provided by reveal.js.
+ * Uses the Inter UI font family · https://rsms.me/inter
+ *
+ * A simple theme for reveal.js presentations, similar
+ * to the default theme. The accent color is darkblue.
+ *
+ * This theme is Copyright (C) 2012 Owen Versteeg, https://github.com/StereotypicalApps. It is MIT licensed.
+ * reveal.js is Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+
+
+// Include theme-specific fonts
+@import url('https://rsms.me/inter/inter-ui.css');
+
+// Override theme settings (see ../template/settings.scss)
+$mainFont: 'Inter UI', sans-serif;
+$mainFontSize: 36px;
+$mainColor: #000;
+
+// Headings
+$headingFont: 'Inter UI', sans-serif;
+$headingColor: #006;
+$headingTextShadow: none;
+$headingTextTransform: none;
+
+$backgroundColor: #fff;
+
+// Links and actions
+$linkColor: #009;
+$linkColorHover: lighten( $linkColor, 20% );
+
+// Text selection
+$selectionBackgroundColor: #191970;
+$selectionColor: #f5f5f5;
+
+section.has-dark-background {
+	&, h1, h2, h3, h4, h5, h6 {
+		color: #fff;
+	}
+}
+
+$headingFontWeight: bold;
+$font-family-monospace:   SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
+
+// Override rules from theme template
+
+@supports (font-variation-settings: normal) {
+  .reveal { font-family: 'Inter UI var alt', sans-serif; }
+}
+
+.reveal code {
+	font-family: $font-family-monospace;
+  font-size: 0.8em;
+  color: #888;
+}
+
+.reveal ol,
+.reveal dl,
+.reveal ul {
+  line-height: 1.4;
+}
+
+.reveal blockquote {
+  box-shadow:none;
+  color: #888;
+  font-size: 0.89em;
+  text-align: left;
+  width: 88%;
+}
+
+.reveal section img {
+  background:none; 
+  border:none; 
+  box-shadow:none;
+}
+
+// Enforce link color on controls
+
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-left.enabled {
+  border-right-color: $linkColor; }
+
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-right.enabled {
+  border-left-color: $linkColor; }
+
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-up.enabled {
+  border-bottom-color: $linkColor; }
+
+.reveal .controls .navigate-down,
+.reveal .controls .navigate-down.enabled {
+  border-top-color: $linkColor; }
+
+.reveal .controls .navigate-left.enabled:hover {
+  border-right-color: $linkColorHover; }
+
+.reveal .controls .navigate-right.enabled:hover {
+  border-left-color: $linkColorHover; }
+
+.reveal .controls .navigate-up.enabled:hover {
+  border-bottom-color: $linkColorHover; }
+
+.reveal .controls .navigate-down.enabled:hover {
+  border-top-color: $linkColorHover; }
+
+// Enforce link color on pre-3.6 (GitPitch) progress bars
+	.reveal .progress span {
+		background: $linkColor;
+	}
+
+// GitPitch menu
+
+.gp-menu-bars {
+  color: #AAA;
+  
+  &:hover {
+  	color: $linkColorHover ;
+  }
+}
+
+// Muted icons
+
+.icon-muted, .muted {
+	color: #eee;
+}
