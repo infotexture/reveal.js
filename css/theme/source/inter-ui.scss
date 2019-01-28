@@ -30,6 +30,7 @@ $mainColor: #000;
 $headingFont: 'Inter UI', sans-serif;
 $headingColor: #006;
 $headingTextShadow: none;
+$headingLetterSpacing: -0.017em;
 $headingTextTransform: none;
 
 $backgroundColor: #fff;
@@ -59,6 +60,10 @@ $font-family-monospace:   SFMono-Regular, Menlo, Monaco, Consolas, "Liberation M
 
 @supports (font-variation-settings: normal) {
   .reveal { font-family: 'Inter UI var alt', sans-serif; }
+}
+
+.reveal {
+  letter-spacing: $headingLetterSpacing;
 }
 
 .reveal code {
